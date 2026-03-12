@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Click n Code — Tejas Jalit</title>
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/resposive.css" />
+  </head>
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #02d4eb;
+      --bg2: #111111;
+      --cyan: #02d4eb;
+      --cyan-dim: rgba(0, 212, 212, 0.15);
+      --cyan-glow: rgba(0, 212, 212, 0.35);
+      --glass-bg: rgba(255, 255, 255, 0.04);
+      --glass-border: rgba(0, 212, 212, 0.25);
+      --text: #e8e8e8;
+      --muted: #888;
+    }
+
+    /* body {
+      background: var(--bg);
+      font-family: 'Exo 2', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+    } */
+
+    /* ─── SECTION ─────────────────────────────────── */
+    .skills-section {
+      position: relative;
+      padding: 100px 60px;
+    }
+
+    /* Ambient background blobs */
+    .skills-section::before,
+    .skills-section::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .skills-section::before {
+      width: 420px;
+      height: 420px;
+      background: rgba(0, 212, 212, 0.07);
+      top: -60px;
+      left: -80px;
+    }
+    .skills-section::after {
+      width: 340px;
+      height: 340px;
+      background: rgba(0, 212, 212, 0.05);
+      bottom: 40px;
+      right: -60px;
+    }
+
+    /* ─── HEADER ──────────────────────────────────── */
+    .section-header {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .section-tag {
+      display: inline-block;
+      font-family: "Rajdhani", sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      border: 1px solid var(--glass-border);
+      background: var(--cyan-dim);
+      padding: 5px 18px;
+      border-radius: 20px;
+      margin-bottom: 18px;
+    }
+    .section-title {
+      font-family: "Rajdhani", sans-serif;
+      font-size: clamp(36px, 5vw, 54px);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.1;
+    }
+    .section-title span {
+      color: var(--cyan);
+    }
+    .section-subtitle {
+      margin-top: 12px;
+      font-size: 15px;
+      color: var(--muted);
+      font-weight: 300;
+      max-width: 520px;
+      margin-inline: auto;
+      line-height: 1.7;
+    }
+
+    /* Decorative divider */
+    .divider {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      margin: 20px auto 0;
+      border-radius: 2px;
+    }
+
+    /* ─── CATEGORIES TABS ────────────────────────── */
+    .tabs {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 52px;
+    }
+    .tab-btn {
+      font-family: "Rajdhani", sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 8px 22px;
+      border-radius: 24px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+    .tab-btn:hover,
+    .tab-btn.active {
+      background: var(--cyan-dim);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 16px var(--cyan-glow);
+    }
+
+    /* ─── SKILLS GRID ─────────────────────────────── */
+    .skills-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    /* ─── SKILL CARD ──────────────────────────────── */
+    .skill-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 18px;
+      padding: 28px 26px 24px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+      transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    /* stagger */
+    .skill-card:nth-child(1) {
+      animation-delay: 0.05s;
+    }
+    .skill-card:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+    .skill-card:nth-child(3) {
+      animation-delay: 0.15s;
+    }
+    .skill-card:nth-child(4) {
+      animation-delay: 0.2s;
+    }
+    .skill-card:nth-child(5) {
+      animation-delay: 0.25s;
+    }
+    .skill-card:nth-child(6) {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .skill-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(0, 212, 212, 0.06) 0%,
+        transparent 60%
+      );
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+    .skill-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--cyan);
+      box-shadow:
+        0 12px 40px rgba(0, 212, 212, 0.15),
+        0 0 0 1px rgba(0, 212, 212, 0.1);
+    }
+    .skill-card:hover::before {
+      opacity: 1;
+    }
+
+    /* Glare streak */
+    .skill-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -80%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(
+        105deg,
+        transparent,
+        rgba(255, 255, 255, 0.04),
+        transparent
+      );
+      transform: skewX(-20deg);
+      transition: left 0.6s ease;
+    }
+    .skill-card:hover::after {
+      left: 140%;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .skill-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--cyan-dim);
+      border: 1px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+      transition:
+        background 0.3s,
+        box-shadow 0.3s;
+    }
+    .skill-card:hover .skill-icon {
+      background: rgba(0, 212, 212, 0.22);
+      box-shadow: 0 0 18px var(--cyan-glow);
+    }
+    .skill-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .skill-name {
+      font-family: "Rajdhani", sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .skill-level-label {
+      font-size: 11px;
+      color: var(--cyan);
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+    .skill-pct {
+      font-family: "Rajdhani", sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--cyan);
+    }
+
+    /* Progress bar */
+    .progress-track {
+      width: 100%;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.07);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--cyan), #00ffff);
+      box-shadow: 0 0 8px var(--cyan-glow);
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    /* Tags */
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .tag {
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      padding: 3px 10px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      transition: all 0.25s;
+    }
+    .skill-card:hover .tag {
+      background: var(--cyan-dim);
+      border-color: rgba(0, 212, 212, 0.3);
+      color: var(--cyan);
+    }
+
+    /* ─── STATS ROW ───────────────────────────────── */
+    .stats-row {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-top: 60px;
+    }
+    .stat-item {
+      flex: 1;
+      max-width: 200px;
+      text-align: center;
+      padding: 28px 20px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(16px);
+      transition:
+        background 0.3s,
+        box-shadow 0.3s;
+    }
+    .stat-item:first-child {
+      border-radius: 18px 0 0 18px;
+    }
+    .stat-item:last-child {
+      border-radius: 0 18px 18px 0;
+    }
+    .stat-item:not(:last-child) {
+      border-right: none;
+    }
+    .stat-item:hover {
+      background: var(--cyan-dim);
+      box-shadow: 0 0 20px var(--cyan-glow);
+    }
+    .stat-num {
+      font-family: "Rajdhani", sans-serif;
+      font-size: 38px;
+      font-weight: 700;
+      color: var(--cyan);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* ─── HIDDEN category sets ────────────────────── */
+    .cat-panel {
+      display: none;
+    }
+    .cat-panel.active {
+      display: grid;
+    }
+
+    /* ─── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 768px) {
+      .skills-section {
+        padding: 70px 24px;
+      }
+      .stat-item {
+        padding: 20px 14px;
+      }
+      .stat-num {
+        font-size: 28px;
+      }
+      .stats-row {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .stat-item {
+        border-radius: 14px !important;
+        border: 1px solid var(--glass-border) !important;
+        max-width: none;
+      }
+    }
+  </style>
+  <body>
+    <div class="container scroll-box">
+      <!-- Navbar -->
+    <div id="navbar"></div>
+
+<script>
+fetch("navbar.html")
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById("navbar").innerHTML = data;
+  });
+</script>
+
+      <section class="skills-section" id="skills">
+        <!-- Header -->
+        <div class="section-header">
+          <div class="section-tag">What I Know</div>
+          <h2 class="section-title">My <span>Skills</span></h2>
+          <!-- <p class="section-subtitle">
+            Technologies and tools I've been working with as a first-year IT
+            engineering student.
+          </p> -->
+          <!-- <div class="divider"></div> -->
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="tabs" id="tabs">
+          <button class="tab-btn active" data-cat="all">All</button>
+          <button class="tab-btn" data-cat="frontend">Frontend</button>
+          <button class="tab-btn" data-cat="backend">Backend</button>
+          <button class="tab-btn" data-cat="tools">Tools & Design</button>
+        </div>
+
+        <!-- All skills grid (default) -->
+        <div class="skills-grid cat-panel active" id="cat-all"></div>
+        <div class="skills-grid cat-panel" id="cat-frontend"></div>
+        <div class="skills-grid cat-panel" id="cat-backend"></div>
+        <div class="skills-grid cat-panel" id="cat-tools"></div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+          <div class="stat-item">
+            <div class="stat-num">10+</div>
+            <div class="stat-label">Technologies</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">5+</div>
+            <div class="stat-label">Projects Built</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">1+</div>
+            <div class="stat-label">Year Learning</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">∞</div>
+            <div class="stat-label">Curiosity</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+  <script>
+    const SKILLS = [
+      {
+        name: "HTML5",
+        icon: "🌐",
+        pct: 90,
+        level: "Expert",
+        cat: "frontend",
+        tags: ["Semantic", "Accessibility", "SEO"],
+      },
+      {
+        name: "CSS3",
+        icon: "🎨",
+        pct: 85,
+        level: "Advanced",
+        cat: "frontend",
+        tags: ["Flexbox", "Grid", "Animations"],
+      },
+      {
+        name: "JavaScript",
+        icon: "⚡",
+        pct: 70,
+        level: "Intermediate",
+        cat: "frontend",
+        tags: ["ES6+", "DOM", "Events"],
+      },
+      {
+        name: "React",
+        icon: "⚛️",
+        pct: 55,
+        level: "Learning",
+        cat: "frontend",
+        tags: ["Hooks", "Components", "JSX"],
+      },
+      {
+        name: "Python",
+        icon: "🐍",
+        pct: 65,
+        level: "Intermediate",
+        cat: "backend",
+        tags: ["Scripting", "Logic", "OOP"],
+      },
+      {
+        name: "MySQL",
+        icon: "🗄️",
+        pct: 55,
+        level: "Intermediate",
+        cat: "backend",
+        tags: ["Queries", "Schema", "CRUD"],
+      },
+      {
+        name: "Node.js",
+        icon: "🟢",
+        pct: 40,
+        level: "Beginner",
+        cat: "backend",
+        tags: ["Express", "REST", "APIs"],
+      },
+      {
+        name: "Git & GitHub",
+        icon: "🔀",
+        pct: 75,
+        level: "Advanced",
+        cat: "tools",
+        tags: ["Version Control", "Collab", "CI"],
+      },
+      {
+        name: "VS Code",
+        icon: "💻",
+        pct: 90,
+        level: "Expert",
+        cat: "tools",
+        tags: ["Extensions", "Debug", "Git"],
+      },
+      {
+        name: "Figma",
+        icon: "🖌️",
+        pct: 60,
+        level: "Intermediate",
+        cat: "tools",
+        tags: ["Wireframe", "UI/UX", "Prototype"],
+      },
+      {
+        name: "Responsive Design",
+        icon: "📱",
+        pct: 80,
+        level: "Advanced",
+        cat: "frontend",
+        tags: ["Mobile First", "Media Queries"],
+      },
+      {
+        name: "C Programming",
+        icon: "🔧",
+        pct: 70,
+        level: "Intermediate",
+        cat: "backend",
+        tags: ["Pointers", "Memory", "Algorithms"],
+      },
+    ];
+
+    function makeCard(s) {
+      return `
+      <div class="skill-card">
+        <div class="card-top">
+          <div class="skill-icon">${s.icon}</div>
+          <div class="skill-info">
+            <div class="skill-name">${s.name}</div>
+            <div class="skill-level-label">${s.level}</div>
+          </div>
+          <div class="skill-pct">${s.pct}%</div>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" data-width="${s.pct}"></div>
+        </div>
+        <div class="skill-tags">
+          ${s.tags.map((t) => `<span class="tag">${t}</span>`).join("")}
+        </div>
+      </div>`;
+    }
+
+    // Populate grids
+    const allEl = document.getElementById("cat-all");
+    const frontEl = document.getElementById("cat-frontend");
+    const backEl = document.getElementById("cat-backend");
+    const toolsEl = document.getElementById("cat-tools");
+
+    SKILLS.forEach((s) => {
+      allEl.insertAdjacentHTML("beforeend", makeCard(s));
+      if (s.cat === "frontend")
+        frontEl.insertAdjacentHTML("beforeend", makeCard(s));
+      if (s.cat === "backend")
+        backEl.insertAdjacentHTML("beforeend", makeCard(s));
+      if (s.cat === "tools")
+        toolsEl.insertAdjacentHTML("beforeend", makeCard(s));
+    });
+
+    // Animate bars on load
+    function animateBars(container) {
+      container.querySelectorAll(".progress-fill").forEach((bar) => {
+        setTimeout(() => {
+          bar.style.width = bar.dataset.width + "%";
+        }, 200);
+      });
+    }
+    animateBars(allEl);
+
+    // Tab switching
+    document.getElementById("tabs").addEventListener("click", (e) => {
+      const btn = e.target.closest(".tab-btn");
+      if (!btn) return;
+      const cat = btn.dataset.cat;
+
+      document
+        .querySelectorAll(".tab-btn")
+        .forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      document
+        .querySelectorAll(".cat-panel")
+        .forEach((p) => p.classList.remove("active"));
+      const panel = document.getElementById("cat-" + cat);
+      panel.classList.add("active");
+
+      // Reset & animate bars
+      panel
+        .querySelectorAll(".progress-fill")
+        .forEach((b) => (b.style.width = "0"));
+      panel.querySelectorAll(".skill-card").forEach((c, i) => {
+        c.style.animation = "none";
+        c.offsetHeight; // reflow
+        c.style.animation = `fadeUp 0.5s ease ${i * 0.07}s both`;
+      });
+      animateBars(panel);
+    });
+  </script>
+</html>

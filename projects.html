@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Click n Code — Tejas Jalit</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/resposive.css" />
+</head>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:            #02d4eb;
+      --card-bg:      rgba(255,255,255,0.03);
+      --cyan:         #00d4d4;
+      --cyan-dim:     rgba(0,212,212,0.12);
+      --cyan-glow:    rgba(0,212,212,0.30);
+      --cyan-border:  rgba(0,212,212,0.22);
+      --text:         #e8e8e8;
+      --muted:        #777;
+      --muted2:       #555;
+    }
+
+    /* body {
+      background: var(--bg);
+      font-family: 'Exo 2', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+    } */
+
+    /* ── SECTION ─────────────────────────────── */
+    .projects-section {
+      position: relative;
+      padding: 100px 60px;
+      overflow: hidden;
+
+    }
+    
+
+    /* ambient blobs */
+    .projects-section::before,
+    .projects-section::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .projects-section::before {
+      width: 500px; height: 500px;
+      background: rgba(0,212,212,0.055);
+      top: -100px; right: -100px;
+    }
+    .projects-section::after {
+      width: 350px; height: 350px;
+      background: rgba(0,212,212,0.04);
+      bottom: 0; left: -60px;
+    }
+
+    /* ── HEADER ──────────────────────────────── */
+    .section-header {
+      position: relative; z-index: 1;
+      text-align: center;
+      margin-bottom: 52px;
+    }
+    .section-tag {
+      display: inline-block;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 4px; text-transform: uppercase;
+      color: var(--cyan);
+      border: 1px solid var(--cyan-border);
+      background: var(--cyan-dim);
+      padding: 5px 18px; border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(36px, 5vw, 54px);
+      font-weight: 700; color: #fff; line-height: 1.1;
+    }
+    .section-title span { color: var(--cyan); }
+    .section-subtitle {
+      margin-top: 12px; font-size: 15px;
+      color: var(--muted); font-weight: 300;
+      max-width: 500px; margin-inline: auto; line-height: 1.7;
+    }
+    .divider {
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      margin: 20px auto 0; border-radius: 2px;
+    }
+
+    /* ── FILTER TABS ─────────────────────────── */
+    .filter-tabs {
+      position: relative; z-index: 1;
+      display: flex; justify-content: center;
+      gap: 10px; flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+    .ftab {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 7px 20px; border-radius: 24px;
+      border: 1px solid var(--cyan-border);
+      background: var(--card-bg);
+      color: var(--muted); cursor: pointer;
+      transition: all 0.28s;
+      backdrop-filter: blur(10px);
+    }
+    .ftab:hover, .ftab.active {
+      background: var(--cyan-dim);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 14px var(--cyan-glow);
+    }
+
+    /* ── GRID ────────────────────────────────── */
+    .projects-grid {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 26px;
+    }
+
+    /* featured card spans 2 cols */
+    .project-card.featured {
+      grid-column: span 2;
+    }
+
+    /* ── CARD ────────────────────────────────── */
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--cyan-border);
+      border-radius: 20px;
+      overflow: hidden;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      position: relative;
+      display: flex; flex-direction: column;
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+      animation: cardIn 0.55s ease both;
+    }
+    .project-card:nth-child(1){animation-delay:0.05s}
+    .project-card:nth-child(2){animation-delay:0.12s}
+    .project-card:nth-child(3){animation-delay:0.19s}
+    .project-card:nth-child(4){animation-delay:0.26s}
+    .project-card:nth-child(5){animation-delay:0.33s}
+
+    @keyframes cardIn {
+      from { opacity:0; transform:translateY(30px); }
+      to   { opacity:1; transform:translateY(0);    }
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--cyan);
+      box-shadow: 0 16px 48px rgba(0,212,212,0.14), 0 0 0 1px rgba(0,212,212,0.08);
+    }
+
+    /* ── MOCK BROWSER PREVIEW ────────────────── */
+    .card-preview {
+      position: relative;
+      height: 190px;
+      overflow: hidden;
+      background: #111;
+      flex-shrink: 0;
+    }
+    .featured .card-preview { height: 240px; }
+
+    /* browser chrome bar */
+    .browser-bar {
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 30px;
+      background: rgba(0,0,0,0.55);
+      display: flex; align-items: center;
+      padding: 0 12px; gap: 6px;
+      z-index: 2; backdrop-filter: blur(4px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+    }
+    .dot-r { background: #ff5f57; }
+    .dot-y { background: #febc2e; }
+    .dot-g { background: #28c840; }
+    .url-bar {
+      flex: 1; margin: 0 10px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 4px; height: 16px;
+      display: flex; align-items: center;
+      padding: 0 8px;
+      font-size: 9px; color: var(--muted2);
+      font-family: 'Exo 2', sans-serif;
+      overflow: hidden; white-space: nowrap;
+    }
+
+    /* project visual fill */
+    .preview-visual {
+      position: absolute;
+      inset: 30px 0 0 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 52px;
+      transition: transform 0.5s ease;
+    }
+    .project-card:hover .preview-visual { transform: scale(1.08); }
+
+    /* each project gets a unique gradient BG */
+    .p1 .preview-visual { background: linear-gradient(135deg,#0f2027,#203a43,#2c5364); }
+    .p2 .preview-visual { background: linear-gradient(135deg,#0d1b2a,#1b263b,#415a77); }
+    .p3 .preview-visual { background: linear-gradient(135deg,#1a0533,#2d1b69,#11998e); }
+    .p4 .preview-visual { background: linear-gradient(135deg,#0f3443,#34e89e22,#0f3443); }
+    .p5 .preview-visual { background: linear-gradient(135deg,#1c1c1c,#2e2e2e,#003333); }
+
+    /* grid pattern overlay */
+    .preview-visual::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,212,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,212,0.05) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    /* corner badge */
+    .badge {
+      position: absolute; top: 38px; right: 12px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 8px;
+      z-index: 3;
+    }
+    .badge-live  { background:rgba(0,212,212,0.2); color:var(--cyan); border:1px solid var(--cyan-border); }
+    .badge-wip   { background:rgba(255,193,7,0.15); color:#ffc107;    border:1px solid rgba(255,193,7,0.3); }
+    .badge-demo  { background:rgba(180,0,255,0.15); color:#cc55ff;    border:1px solid rgba(180,0,255,0.3); }
+
+    /* ── CARD BODY ───────────────────────────── */
+    .card-body {
+      padding: 22px 22px 20px;
+      display: flex; flex-direction: column;
+      flex: 1;
+    }
+    .card-meta {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .proj-num {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 11px; font-weight: 600;
+      color: var(--cyan); letter-spacing: 2px;
+    }
+    .proj-year {
+      font-size: 11px; color: var(--muted2);
+      font-weight: 300;
+    }
+    .proj-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 20px; font-weight: 700; color: #fff;
+      margin-bottom: 8px;
+      transition: color 0.25s;
+    }
+    .project-card:hover .proj-title { color: var(--cyan); }
+    .proj-desc {
+      font-size: 13px; color: var(--muted);
+      line-height: 1.65; font-weight: 300;
+      flex: 1; margin-bottom: 16px;
+    }
+
+    /* tech pills */
+    .tech-stack {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 18px;
+    }
+    .tech-pill {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.6px;
+      padding: 3px 10px; border-radius: 8px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+      transition: all 0.25s;
+    }
+    .project-card:hover .tech-pill {
+      background: var(--cyan-dim);
+      border-color: rgba(0,212,212,0.28);
+      color: var(--cyan);
+    }
+
+    /* action buttons */
+    .card-actions {
+      display: flex; gap: 10px;
+    }
+    .btn-demo, .btn-code {
+      flex: 1;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 9px 0; border-radius: 10px;
+      cursor: pointer; border: none;
+      text-decoration: none; text-align: center;
+      transition: all 0.28s;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .btn-demo {
+      background: var(--cyan);
+      color: #0d1a1a;
+    }
+    .btn-demo:hover {
+      background: #00ffff;
+      box-shadow: 0 0 20px var(--cyan-glow);
+      transform: translateY(-2px);
+    }
+    .btn-code {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--cyan-border);
+      color: var(--cyan);
+    }
+    .btn-code:hover {
+      background: var(--cyan-dim);
+      border-color: var(--cyan);
+      transform: translateY(-2px);
+    }
+
+    /* ── CTA ROW ─────────────────────────────── */
+    .cta-row {
+      position: relative; z-index: 1;
+      text-align: center; margin-top: 56px;
+    }
+    .cta-text {
+      font-size: 14px; color: var(--muted);
+      margin-bottom: 18px; font-weight: 300;
+    }
+    .btn-github {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 13px 36px; border-radius: 50px;
+      border: 1px solid var(--cyan-border);
+      background: var(--card-bg);
+      color: var(--cyan); cursor: pointer;
+      text-decoration: none;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
+    }
+    .btn-github:hover {
+      background: var(--cyan-dim);
+      border-color: var(--cyan);
+      box-shadow: 0 0 26px var(--cyan-glow);
+      transform: translateY(-3px);
+    }
+    .gh-icon { font-size: 18px; }
+
+    /* ── RESPONSIVE ──────────────────────────── */
+    @media (max-width: 900px) {
+      .projects-grid { grid-template-columns: 1fr 1fr; }
+      .project-card.featured { grid-column: span 2; }
+    }
+    @media (max-width: 600px) {
+      .projects-section { padding: 70px 20px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-card.featured { grid-column: span 1; }
+    }
+  </style>
+<body>
+    <div class="container scroll-box" >
+        <!-- Navbar -->
+  <div id="navbar"></div>
+
+<script>
+fetch("navbar.html")
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById("navbar").innerHTML = data;
+  });
+</script>
+
+  <section class="projects-section" id="projects">
+
+  <!-- Header -->
+  <div class="section-header">
+    <div class="section-tag">What I've Built</div>
+    <h2 class="section-title">My <span>Projects</span></h2>
+    <!-- <p class="section-subtitle">A collection of things I've designed and built while learning web development.</p> -->
+    <!-- <div class="divider"></div> -->
+  </div>
+
+  <!-- Filter Tabs -->
+  <div class="filter-tabs" id="filterTabs">
+    <button class="ftab active" data-filter="all">All</button>
+    <button class="ftab" data-filter="web">Web Dev</button>
+    <button class="ftab" data-filter="ui">UI / Design</button>
+    <button class="ftab" data-filter="python">Python</button>
+  </div>
+
+  <!-- Projects Grid -->
+  <div class="projects-grid" id="projectsGrid">
+
+    <!-- Card 1 – Featured -->
+    <div class="project-card p1 featured" data-cat="web">
+      <div class="card-preview">
+        <div class="browser-bar">
+          <div class="dot dot-r"></div>
+          <div class="dot dot-y"></div>
+          <div class="dot dot-g"></div>
+          <div class="url-bar">tejas-portfolio.netlify.app</div>
+        </div>
+        <div class="preview-visual">🌐</div>
+        <span class="badge badge-live">● Live</span>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span class="proj-num">01</span>
+          <span class="proj-year">2025</span>
+        </div>
+        <div class="proj-title">Personal Portfolio Website</div>
+        <div class="proj-desc">A fully responsive portfolio website showcasing my skills, projects, and journey as a first-year IT student. Features smooth animations, glassmorphism UI, and a dark teal aesthetic.</div>
+        <div class="tech-stack">
+          <span class="tech-pill">HTML5</span>
+          <span class="tech-pill">CSS3</span>
+          <span class="tech-pill">JavaScript</span>
+          <span class="tech-pill">Responsive</span>
+          <span class="tech-pill">Animations</span>
+        </div>
+        <div class="card-actions">
+          <a href="#" class="btn-demo">▶ Live Demo</a>
+          <a href="#" class="btn-code">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            Source
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="project-card p2" data-cat="web">
+      <div class="card-preview">
+        <div class="browser-bar">
+          <div class="dot dot-r"></div>
+          <div class="dot dot-y"></div>
+          <div class="dot dot-g"></div>
+          <div class="url-bar">weather-app.vercel.app</div>
+        </div>
+        <div class="preview-visual">🌦️</div>
+        <span class="badge badge-live">● Live</span>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span class="proj-num">02</span>
+          <span class="proj-year">2025</span>
+        </div>
+        <div class="proj-title">Weather App</div>
+        <div class="proj-desc">Real-time weather app using OpenWeather API. Search any city to get current temperature, humidity, and conditions with animated weather icons.</div>
+        <div class="tech-stack">
+          <span class="tech-pill">HTML</span>
+          <span class="tech-pill">CSS</span>
+          <span class="tech-pill">JavaScript</span>
+          <span class="tech-pill">REST API</span>
+        </div>
+        <div class="card-actions">
+          <a href="#" class="btn-demo">▶ Live Demo</a>
+          <a href="#" class="btn-code">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            Source
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="project-card p3" data-cat="ui">
+      <div class="card-preview">
+        <div class="browser-bar">
+          <div class="dot dot-r"></div>
+          <div class="dot dot-y"></div>
+          <div class="dot dot-g"></div>
+          <div class="url-bar">figma.com/tejas-ui-kit</div>
+        </div>
+        <div class="preview-visual">🎨</div>
+        <span class="badge badge-demo">✦ Design</span>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span class="proj-num">03</span>
+          <span class="proj-year">2025</span>
+        </div>
+        <div class="proj-title">UI Component Kit</div>
+        <div class="proj-desc">A Figma-designed set of reusable UI components — buttons, cards, navbars — built for modern dark-themed web apps.</div>
+        <div class="tech-stack">
+          <span class="tech-pill">Figma</span>
+          <span class="tech-pill">UI/UX</span>
+          <span class="tech-pill">Design System</span>
+        </div>
+        <div class="card-actions">
+          <a href="#" class="btn-demo">▶ View Design</a>
+          <a href="#" class="btn-code">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            Source
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="project-card p4" data-cat="python">
+      <div class="card-preview">
+        <div class="browser-bar">
+          <div class="dot dot-r"></div>
+          <div class="dot dot-y"></div>
+          <div class="dot dot-g"></div>
+          <div class="url-bar">github.com/tejas/quiz-app</div>
+        </div>
+        <div class="preview-visual">🐍</div>
+        <span class="badge badge-wip">◎ WIP</span>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span class="proj-num">04</span>
+          <span class="proj-year">2026</span>
+        </div>
+        <div class="proj-title">Python Quiz App</div>
+        <div class="proj-desc">A terminal-based quiz application built with Python. Tracks scores, randomizes questions, and supports multiple categories.</div>
+        <div class="tech-stack">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">OOP</span>
+          <span class="tech-pill">CLI</span>
+          <span class="tech-pill">File I/O</span>
+        </div>
+        <div class="card-actions">
+          <a href="#" class="btn-demo">▶ See Demo</a>
+          <a href="#" class="btn-code">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            Source
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="project-card p5" data-cat="web">
+      <div class="card-preview">
+        <div class="browser-bar">
+          <div class="dot dot-r"></div>
+          <div class="dot dot-y"></div>
+          <div class="dot dot-g"></div>
+          <div class="url-bar">to-do-list.netlify.app</div>
+        </div>
+        <div class="preview-visual">✅</div>
+        <span class="badge badge-live">● Live</span>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span class="proj-num">05</span>
+          <span class="proj-year">2024</span>
+        </div>
+        <div class="proj-title">To-Do List App</div>
+        <div class="proj-desc">A clean, minimal to-do app with local storage persistence, task filtering, and smooth CSS transitions. My first full JS project.</div>
+        <div class="tech-stack">
+          <span class="tech-pill">HTML</span>
+          <span class="tech-pill">CSS</span>
+          <span class="tech-pill">JavaScript</span>
+          <span class="tech-pill">LocalStorage</span>
+        </div>
+        <div class="card-actions">
+          <a href="#" class="btn-demo">▶ Live Demo</a>
+          <a href="#" class="btn-code">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            Source
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /grid -->
+
+  <!-- CTA -->
+  <div class="cta-row">
+    <p class="cta-text">Want to see more? All my projects are available on GitHub.</p>
+    <a href="https://github.com/" target="_blank" class="btn-github">
+      <span class="gh-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      </span>
+      View All on GitHub
+    </a>
+  </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+<script>
+  // Filter logic
+  document.getElementById('filterTabs').addEventListener('click', e => {
+    const btn = e.target.closest('.ftab');
+    if (!btn) return;
+    const filter = btn.dataset.filter;
+
+    document.querySelectorAll('.ftab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    document.querySelectorAll('.project-card').forEach((card, i) => {
+      const match = filter === 'all' || card.dataset.cat === filter;
+      if (match) {
+        card.style.display = 'flex';
+        card.style.animation = 'none';
+        card.offsetHeight;
+        card.style.animation = `cardIn 0.5s ease ${i * 0.08}s both`;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    // Fix featured span when filtering
+    document.querySelectorAll('.project-card.featured').forEach(card => {
+      const visible = card.style.display !== 'none';
+      card.style.gridColumn = visible ? 'span 2' : 'span 1';
+    });
+  });
+</script>
+</body>
+
+</html>

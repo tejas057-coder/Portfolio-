@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Navbar — Tejas Jalit Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cyan:        #00d4d4;
+      --cyan-dim:    rgba(0, 212, 212, 0.10);
+      --cyan-glow:   rgba(0, 212, 212, 0.32);
+      --cyan-border: rgba(0, 212, 212, 0.22);
+      --muted:       #888;
+      --nav-height:  72px;
+    }
+
+    body {
+      background: #24cacf;
+      font-family: "Rajdhani", sans-serif;
+      /* just so you can see the navbar scrolled state */
+      min-height: 200vh;
+    }
+
+    /* ══════════════════════════════
+       NAVBAR
+    ══════════════════════════════ */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: var(--nav-height);
+      padding: 0 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      background: rgba(17,17,17,0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0,212,212,0.07);
+      transition: background 0.35s, box-shadow 0.35s, border-color 0.35s;
+    }
+    .navbar.scrolled {
+      background: rgba(10,10,10,0.96);
+      box-shadow: 0 4px 40px rgba(0,0,0,0.6);
+      border-bottom-color: var(--cyan-border);
+    }
+
+    /* LOGO */
+    .nav-logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 1.5px;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: opacity 0.25s;
+    }
+    .nav-logo:hover { opacity: 0.75; }
+    .nav-logo span  { color: #fff; }
+
+    /* DESKTOP LINKS */
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+      justify-content: center;
+    }
+    .nav-link {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 7px 16px;
+      border-radius: 8px;
+      position: relative;
+      transition: color 0.25s, background 0.25s;
+    }
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      bottom: 3px; left: 50%; right: 50%;
+      height: 2px;
+      background: var(--cyan);
+      border-radius: 2px;
+      transition: left 0.3s, right 0.3s;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--cyan); }
+    .nav-link:hover::after, .nav-link.active::after { left: 16px; right: 16px; }
+
+    /* BUTTONS */
+    .nav-actions { display: flex; gap: 10px; flex-shrink: 0; }
+    .nav-btn {
+      font-family: "Rajdhani", sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      padding: 8px 22px;
+      border-radius: 8px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.28s;
+      display: inline-block;
+    }
+    .nav-btn-outline {
+      border: 1px solid var(--cyan-border);
+      background: transparent;
+      color: var(--cyan);
+    }
+    .nav-btn-outline:hover {
+      background: var(--cyan-dim);
+      border-color: var(--cyan);
+      box-shadow: 0 0 16px var(--cyan-glow);
+    }
+    .nav-btn-filled {
+      border: 1px solid var(--cyan);
+      background: var(--cyan);
+      color: #0d1a1a;
+    }
+    .nav-btn-filled:hover {
+      background: #00ffff;
+      box-shadow: 0 0 20px var(--cyan-glow);
+    }
+
+    /* HAMBURGER */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 42px; height: 42px;
+      padding: 9px;
+      background: transparent;
+      border: 1px solid var(--cyan-border);
+      border-radius: 8px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: border-color 0.25s, background 0.25s;
+    }
+    .nav-hamburger:hover {
+      border-color: var(--cyan);
+      background: var(--cyan-dim);
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 100%; height: 2px;
+      background: var(--cyan);
+      border-radius: 2px;
+      transform-origin: center;
+      transition: transform 0.35s, opacity 0.25s, width 0.3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* MOBILE DRAWER */
+    .nav-drawer {
+      position: fixed;
+      top: var(--nav-height); left: 0; right: 0;
+      z-index: 999;
+      background: rgba(10,10,10,0.98);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--cyan-border);
+      padding: 20px 24px 28px;
+      flex-direction: column;
+      gap: 4px;
+      transform: translateY(-8px);
+      opacity: 0;
+      display: none;
+      pointer-events: none;
+      transition: transform 0.35s ease, opacity 0.3s ease;
+    }
+    .nav-drawer.open {
+      display: flex;
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+    .drawer-links { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .nav-drawer .nav-link {
+      display: block;
+      font-size: 15px;
+      letter-spacing: 2.5px;
+      padding: 13px 18px;
+      border-radius: 10px;
+    }
+    .nav-drawer .nav-link::after { display: none; }
+    .nav-drawer .nav-link:hover,
+    .nav-drawer .nav-link.active { background: var(--cyan-dim); color: var(--cyan); }
+    .drawer-actions { display: flex; gap: 10px; margin-top: 16px; }
+    .drawer-actions .nav-btn { flex: 1; text-align: center; }
+
+    /* OVERLAY */
+    .nav-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 998;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(2px);
+      animation: fadeIn 0.3s ease forwards;
+    }
+    .nav-overlay.show { display: block; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* ══════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════ */
+    @media (max-width: 1024px) {
+      .navbar    { padding: 0 36px; }
+      .nav-link  { padding: 7px 11px; font-size: 12px; }
+    }
+    @media (max-width: 768px) {
+      .navbar        { padding: 0 20px; }
+      .nav-links     { display: none; }
+      .nav-actions   { display: none; }
+      .nav-hamburger { display: flex; }
+    }
+    @media (max-width: 400px) {
+      .nav-logo { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAVBAR ══ -->
+  <nav class="navbar" id="navbar">
+
+    <a href="index.html" class="nav-logo">Portfolio<span>.</span></a>
+
+    <ul class="nav-links">
+      <li><a href="index.html"    class="nav-link" data-page="index.html">Home</a></li>
+      <li><a href="about.html"    class="nav-link" data-page="about.html">About</a></li>
+      <li><a href="skills.html"   class="nav-link" data-page="skills.html">Skills</a></li>
+      <li><a href="projects.html" class="nav-link" data-page="projects.html">Projects</a></li>
+      <li><a href="contact.html"  class="nav-link" data-page="contact.html">Contact</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <a href="#" class="nav-btn nav-btn-outline">Login</a>
+      <a href="#" class="nav-btn nav-btn-filled">Sign Up</a>
+    </div>
+
+    <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+  </nav>
+
+  <!-- Mobile Drawer -->
+  <div class="nav-drawer" id="navDrawer">
+    <ul class="drawer-links">
+      <li><a href="index.html"    class="nav-link" data-page="index.html"    onclick="navClose()">Home</a></li>
+      <li><a href="about.html"    class="nav-link" data-page="about.html"    onclick="navClose()">About</a></li>
+      <li><a href="skills.html"   class="nav-link" data-page="skills.html"   onclick="navClose()">Skills</a></li>
+      <li><a href="projects.html" class="nav-link" data-page="projects.html" onclick="navClose()">Projects</a></li>
+      <li><a href="contact.html"  class="nav-link" data-page="contact.html"  onclick="navClose()">Contact</a></li>
+    </ul>
+    <div class="drawer-actions">
+      <a href="#" class="nav-btn nav-btn-outline">Login</a>
+      <a href="#" class="nav-btn nav-btn-filled">Sign Up</a>
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div class="nav-overlay" id="navOverlay" onclick="navClose()"></div>
+
+
+  <script>
+    const navbar    = document.getElementById("navbar");
+    const hamburger = document.getElementById("navHamburger");
+    const drawer    = document.getElementById("navDrawer");
+    const overlay   = document.getElementById("navOverlay");
+
+    /* 1 — Scroll effect */
+    window.addEventListener("scroll", () => {
+      navbar.classList.toggle("scrolled", window.scrollY > 30);
+    }, { passive: true });
+
+    /* 2 — Open */
+    function navOpen() {
+      hamburger.classList.add("open");
+      drawer.classList.add("open");
+      overlay.classList.add("show");
+      hamburger.setAttribute("aria-expanded", "true");
+      document.body.style.overflow = "hidden";
+    }
+
+    /* 3 — Close (global so onclick="" works) */
+    window.navClose = function () {
+      hamburger.classList.remove("open");
+      drawer.classList.remove("open");
+      overlay.classList.remove("show");
+      hamburger.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
+    };
+
+    /* 4 — Toggle */
+    hamburger.addEventListener("click", () =>
+      drawer.classList.contains("open") ? navClose() : navOpen()
+    );
+
+    /* 5 — Escape key */
+    document.addEventListener("keydown", e => { if (e.key === "Escape") navClose(); });
+
+    /* 6 — Resize guard */
+    window.addEventListener("resize", () => { if (window.innerWidth > 768) navClose(); });
+
+    /* 7 — Active link */
+    const currentPage = window.location.pathname.split("/").pop() || "index.html";
+    document.querySelectorAll(".nav-link").forEach(link => {
+      link.classList.toggle("active", link.getAttribute("data-page") === currentPage);
+    });
+  </script>
+
+</body>
+</html>
